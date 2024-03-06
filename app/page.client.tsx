@@ -17,7 +17,7 @@ export default function Home() {
   return (
     <div className={`flex items-center justify-center h-screen bg-cover bg-center transition-opacity duration-1000 ease-in-out`} style={{ backgroundImage: `url(${bgImage.src})`, opacity: opacity }}>
       <div className="text-center">
-      <a href="mailto:info@gianlucalazzar.in" class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded m-2">CONTATTAMI</a>
+      <a href="mailto:info@gianlucalazzar.in" className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded m-2">CONTATTAMI</a>
       </div>
     </div>
   );
