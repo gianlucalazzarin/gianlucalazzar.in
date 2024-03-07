@@ -13,7 +13,7 @@ export default function Home() {
         {/* Aggiungi l'attributo href con il link desiderato al tag a */}
         <a href="https://x.com/glzzn">
           <div className="bg-black w-10 h-10 flex items-center justify-center rounded focus:outline-none">
-            <FontAwesomeIcon icon={faXTwitter} className="text-white" />
+            <FontAwesomeIcon icon={faXTwitter} className="text-white" style={{ transform: 'scale(0.6)'}} />
           </div>
         </a>
         <a href="https://instagram.com/gianlucalazzarin">
