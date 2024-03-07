@@ -12,22 +12,22 @@ export default function Home() {
       <div className="flex justify-center space-x-4"> 
         {/* Aggiungi l'attributo href con il link desiderato al tag a */}
         <a href="https://x.com/glzzn">
-          <button className="bg-black w-20 h-20 flex items-center justify-center rounded focus:outline-none">
+          <button className="bg-black w-10 h-10 flex items-center justify-center rounded focus:outline-none">
             <FontAwesomeIcon icon={faXTwitter} className="text-white" style={{ transform: 'scale(0.6)' }} />
           </button>
         </a>
         <a href="https://instagram.com/gianlucalazzarin">
-          <button className="bg-black w-20 h-20 flex items-center justify-center rounded focus:outline-none">
+          <button className="bg-black w-10 h-10 flex items-center justify-center rounded focus:outline-none">
             <FontAwesomeIcon icon={faInstagram} className="text-white" style={{ transform: 'scale(0.6)' }} />
           </button>
         </a>
         <a href="https://www.linkedin.com/in/lazzaringianluca/">
-          <button className="bg-black w-20 h-20 flex items-center justify-center rounded focus:outline-none">
+          <button className="bg-black w-10 h-10 flex items-center justify-center rounded focus:outline-none">
             <FontAwesomeIcon icon={faLinkedin} className="text-white" style={{ transform: 'scale(0.6)' }} />
           </button>
         </a>
         <a href="mailto:io@gianlucalazzar.in">
-          <button className="bg-black w-20 h-20 flex items-center justify-center rounded focus:outline-none">
+          <button className="bg-black w-10 h-10 flex items-center justify-center rounded focus:outline-none">
             <FontAwesomeIcon icon={faEnvelope} className="text-yellow-400" style={{ transform: 'scale(0.6)' }} />
           </button>
         </a>
