@@ -17,7 +17,7 @@ export default function Home() {
           </button>
         </a>
         <a href="https://instagram.com/gianlucalazzarin">
-          <button className="bg-black w-10 h-10 flex items-center justify-center rounded focus:outline-none">
+          <button className="bg-black w-10 h-10 flex items-center justify-center rounded focus:outline-none" style={{  zIndex: -1  }} >
             <FontAwesomeIcon icon={faInstagram} className="text-white" style={{ transform: 'scale(0.6)', zIndex: 5  }} />
           </button>
         </a>
