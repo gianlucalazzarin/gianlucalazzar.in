@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <div className={`flex items-center justify-center h-screen bg-cover bg-center animate__animated animate__fadeIn`} style={{ backgroundImage: `url(${bgImage.src})` }}>
       <div className="text-center">
-        <div className="flex justify-center space-x-4 animate__animated animate__fadeIn">
+        <div className="flex justify-center space-x-4 animate__animated animate__fadeIn animate__delay-2s">
           <a href="https://x.com/glzzn">
             <div className="bg-black w-10 h-10 flex items-center justify-center rounded focus:outline-none">
               <i className="fab fa-x-twitter text-white" style={{ fontSize: '24px' }}></i>
