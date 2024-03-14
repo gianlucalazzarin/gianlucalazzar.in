@@ -31,11 +31,6 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <footer className="text-center p-4 absolute bottom-0 w-full animate__animated animate__fadeInUp animate__delay-3s">
-        <a href="https://photo.gianlucalazzar.in">
-          <span className="text-white" style={{ fontFamily: "Courier New" }}>photo.gianlucalazzar.in</span>
-        </a>
-      </footer>
     </div>
   );
 }
