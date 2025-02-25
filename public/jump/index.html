@@ -284,20 +284,81 @@
       if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') keys.left = false;
       if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') keys.right = false;
     });
+    
+// Aggiungi questi event listener dopo quelli della tastiera
 
+// Touch controls per mobile
+let touchStartX = 0;
+canvas.addEventListener('touchstart', function(e) {
+  touchStartX = e.touches[0].clientX;
+});
+
+canvas.addEventListener('touchmove', function(e) {
+  const touchX = e.touches[0].clientX;
+  keys.left = false;
+  keys.right = false;
+  
+  if (touchX < touchStartX - 10) keys.left = true;
+  if (touchX > touchStartX + 10) keys.right = true;
+  
+  // Previeni lo scroll della pagina
+  e.preventDefault();
+});
+
+canvas.addEventListener('touchend', function() {
+  keys.left = false;
+  keys.right = false;
+});
     // Funzione che gestisce l'orientamento del dispositivo
     function handleDeviceOrientation(e) {
-      if (e.gamma !== null) {
-        const tilt = e.gamma; // Valore tipico fra -90 e +90
-        keys.left = false;
-        keys.right = false;
-        if (tilt < -5) keys.left = true;
-        if (tilt > 5) keys.right = true;
-      }
-    }
+  if (e.gamma !== null) {
+    const tilt = e.gamma; // Valore tipico fra -90 e +90
+    keys.left = false;
+    keys.right = false;
+    
+    // Ridurre la soglia per rendere il controllo più sensibile
+    if (tilt < -2) keys.left = true;  // Da -5 a -2
+    if (tilt > 2) keys.right = true;  // Da 5 a 2
+    
+    // Log per debug
+    console.log("Tilt value:", tilt);
+  }
+}
 
     // Richiede il permesso per l'uso dell'accelerometro (necessario su iOS 13+)
-    async function requestOrientationPermission() {
+// Modifica la funzione requestOrientationPermission
+async function requestOrientationPermission() {
+  try {
+    if (typeof DeviceOrientationEvent !== 'undefined' && 
+        typeof DeviceOrientationEvent.requestPermission === 'function') {
+      // iOS 13+ richiede permesso esplicito
+      const permissionState = await DeviceOrientationEvent.requestPermission();
+      if (permissionState === 'granted') {
+        window.addEventListener('deviceorientation', handleDeviceOrientation);
+        console.log('Permesso concesso per i sensori di orientamento.');
+      } else {
+        console.log('Permesso negato per i sensori di orientamento.');
+      }
+    } else {
+      // Android non richiede permesso esplicito ma potrebbe avere altri problemi
+      window.addEventListener('deviceorientation', handleDeviceOrientation);
+      console.log('Sensori di orientamento abilitati (Android)');
+      
+      // Aggiunge anche i controlli touch come fallback
+      enableTouchControls();
+    }
+  } catch (err) {
+    console.error('Errore nella richiesta di permesso:', err);
+    // Fallback ai controlli touch
+    enableTouchControls();
+  }
+}
+
+function enableTouchControls() {
+  // Implementa i controlli touch come fallback
+  console.log('Controlli touch abilitati come fallback');
+  // Implementa i controlli touch mostrati sopra
+}
       if (typeof DeviceOrientationEvent !== 'undefined'
           && typeof DeviceOrientationEvent.requestPermission === 'function') {
         try {
