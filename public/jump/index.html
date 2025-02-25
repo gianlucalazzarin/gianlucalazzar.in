@@ -1,491 +1,521 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Doodle Jump Clone</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: #f0f0f0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            font-family: 'Arial', sans-serif;
-        }
-        
-        #game-container {
-            position: relative;
-            width: 380px;
-            height: 600px;
-        }
-        
-        #canvas {
-            background-color: #c1e9ff;
-            border: 2px solid #333;
-            display: block;
-        }
-        
-        #score {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            font-size: 24px;
-            color: #333;
-            font-weight: bold;
-        }
-        
-        #game-over {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: rgba(255, 255, 255, 0.9);
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-            display: none;
-        }
-        
-        #restart-btn {
-            margin-top: 15px;
-            padding: 10px 20px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        
-        #restart-btn:hover {
-            background-color: #45a049;
-        }
-        
-        #instructions {
-            position: absolute;
-            bottom: 10px;
-            left: 10px;
-            color: #555;
-            font-size: 14px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Doodle Jump Clone</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #f0f0f0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: 'Arial', sans-serif;
+    }
+
+    #game-container {
+      position: relative;
+      width: 380px;
+      height: 600px;
+    }
+
+    #canvas {
+      background-color: #c1e9ff;
+      border: 2px solid #333;
+      display: block;
+    }
+
+    #score {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 24px;
+      color: #333;
+      font-weight: bold;
+    }
+
+    #game-over {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: rgba(255, 255, 255, 0.9);
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      display: none;
+    }
+
+    #restart-btn {
+      margin-top: 15px;
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    #restart-btn:hover {
+      background-color: #45a049;
+    }
+
+    #instructions {
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+      color: #555;
+      font-size: 14px;
+    }
+
+    #permission-btn {
+      position: absolute;
+      bottom: 50px;
+      left: 10px;
+      background-color: #008CBA;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      padding: 8px 12px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    #permission-btn:hover {
+      background-color: #0079a2;
+    }
+  </style>
 </head>
 <body>
-    <div id="game-container">
-        <canvas id="canvas" width="380" height="600"></canvas>
-        <div id="score">0</div>
-        <div id="game-over">
-            <h2>Game Over!</h2>
-            <p>Il tuo punteggio: <span id="final-score">0</span></p>
-            <button id="restart-btn">Rigioca</button>
-        </div>
-        <div id="instructions">
-            Desktop: Frecce ← → o A D<br>
-            Mobile: Inclina il dispositivo
-        </div>
+  <div id="game-container">
+    <canvas id="canvas" width="380" height="600"></canvas>
+    <div id="score">0</div>
+    <div id="game-over">
+      <h2>Game Over!</h2>
+      <p>Il tuo punteggio: <span id="final-score">0</span></p>
+      <button id="restart-btn">Rigioca</button>
     </div>
+    <div id="instructions">
+      Desktop: Frecce ← → o A D<br>
+      Mobile: premi <b>Abilita inclinazione</b> e inclina il dispositivo
+    </div>
+    <!-- Pulsante per chiedere il permesso di usare l'accelerometro su iOS/Android -->
+    <button id="permission-btn">Abilita inclinazione</button>
+  </div>
 
-    <script>
-        // Inizializzazione del gioco
-        const canvas = document.getElementById('canvas');
-        const ctx = canvas.getContext('2d');
-        const scoreElement = document.getElementById('score');
-        const gameOverElement = document.getElementById('game-over');
-        const finalScoreElement = document.getElementById('final-score');
-        const restartBtn = document.getElementById('restart-btn');
-        
-        // Dimensioni del canvas
-        const width = canvas.width;
-        const height = canvas.height;
-        
-        // Configurazione del gioco
-        let score = 0;
-        let gameOver = false;
-        let platformGap = 80; // Distanza tra le piattaforme
-        let platformWidth = 70; // Larghezza delle piattaforme
-        let difficulty = 1; // Fattore di difficoltà
-        
-        // Personaggio
-        const player = {
-            x: width / 2 - 20,
-            y: height - 150,
-            width: 40,
-            height: 40,
-            velocityY: 0,
-            velocityX: 0,
-            jumpForce: -12,
-            gravity: 0.5,
-            speed: 5,
-            jumping: false,
-            color: '#32CD32'
-        };
-        
-        // Array di piattaforme
-        let platforms = [];
-        
-        // Array di bonus
-        let bonuses = [];
-        
-        // Array di ostacoli
-        let obstacles = [];
-        
-        // Immagini
-        const sprites = {
-            player: new Image(),
-            platform: new Image(),
-            bonus: new Image(),
-            obstacle: new Image()
-        };
-        
-        // Carica le immagini (utilizziamo dei placeholder per semplicità)
-        function createCircleImage(color, size) {
-            const tempCanvas = document.createElement('canvas');
-            tempCanvas.width = size;
-            tempCanvas.height = size;
-            const tempCtx = tempCanvas.getContext('2d');
-            
-            tempCtx.fillStyle = color;
-            tempCtx.beginPath();
-            tempCtx.arc(size/2, size/2, size/2, 0, Math.PI * 2);
-            tempCtx.fill();
-            
-            const img = new Image();
-            img.src = tempCanvas.toDataURL();
-            return img;
-        }
-        
-        function createRectImage(color, width, height) {
-            const tempCanvas = document.createElement('canvas');
-            tempCanvas.width = width;
-            tempCanvas.height = height;
-            const tempCtx = tempCanvas.getContext('2d');
-            
-            tempCtx.fillStyle = color;
-            tempCtx.fillRect(0, 0, width, height);
-            
-            const img = new Image();
-            img.src = tempCanvas.toDataURL();
-            return img;
-        }
-        
-        // Funzione per caricare un'immagine esterna
-        function loadPlayerImage(imageUrl) {
-            const img = new Image();
-            img.src = imageUrl;
-            
-            // Fallback al cerchio verde se l'immagine non si carica
-            img.onerror = function() {
-                console.error("Errore nel caricamento dell'immagine del giocatore");
-                sprites.player = createCircleImage('#32CD32', 40);
-            };
-            
-            return img;
-        }
-        
-        // Inizializza le immagini
-        // Per usare la tua foto, sostituisci l'URL di esempio con l'URL della tua immagine
-        sprites.player = loadPlayerImage('jump/io.png');
-        //sprites.player = createCircleImage('#32CD32', 40); // Questa riga può essere commentata quando usi la tua immagine
-        sprites.platform = createRectImage('#8B4513', platformWidth, 15);
-        sprites.bonus = createCircleImage('#FFD700', 20);
-        sprites.obstacle = createCircleImage('#FF0000', 15);
-        
-        // Genera piattaforme iniziali
-        function generateInitialPlatforms() {
-            platforms = [];
-            let platformCount = Math.floor(height / platformGap);
-            
-            // Prima piattaforma sotto il giocatore
-            platforms.push({
-                x: width / 2 - platformWidth / 2,
-                y: height - 100,
-                width: platformWidth,
-                height: 15
-            });
-            
-            // Genera le altre piattaforme
-            for (let i = 0; i < platformCount; i++) {
-                platforms.push({
-                    x: Math.random() * (width - platformWidth),
-                    y: height - (i * platformGap) - 200,
-                    width: platformWidth,
-                    height: 15
-                });
-            }
-        }
-        
-        // Genera un nuovo bonus
-        function generateBonus() {
-            if (Math.random() < 0.1 * difficulty) {
-                const platform = platforms[Math.floor(Math.random() * platforms.length)];
-                bonuses.push({
-                    x: platform.x + platform.width / 2 - 10,
-                    y: platform.y - 25,
-                    width: 20,
-                    height: 20,
-                    type: 'point' // In futuro possiamo aggiungere altri tipi
-                });
-            }
-        }
-        
-        // Genera un nuovo ostacolo
-        function generateObstacle() {
-            if (Math.random() < 0.05 * difficulty && score > 1000) {
-                obstacles.push({
-                    x: Math.random() * (width - 15),
-                    y: -20,
-                    width: 15,
-                    height: 15,
-                    speed: 2 + difficulty
-                });
-            }
-        }
-        
-        // Crea una nuova piattaforma nella parte superiore
-        function generateNewPlatform() {
-            platforms.push({
-                x: Math.random() * (width - platformWidth),
-                y: platforms[platforms.length - 1].y - platformGap,
-                width: platformWidth,
-                height: 15
-            });
-        }
-        
-        // Gestione degli input
-        let keys = {
-            left: false,
-            right: false
-        };
-        
-        window.addEventListener('keydown', function(e) {
-            if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') keys.left = true;
-            if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') keys.right = true;
+  <script>
+    // Riferimenti agli elementi HTML
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    const scoreElement = document.getElementById('score');
+    const gameOverElement = document.getElementById('game-over');
+    const finalScoreElement = document.getElementById('final-score');
+    const restartBtn = document.getElementById('restart-btn');
+    const permissionBtn = document.getElementById('permission-btn');
+
+    // Dimensioni del canvas
+    const width = canvas.width;
+    const height = canvas.height;
+
+    // Configurazione del gioco
+    let score = 0;
+    let gameOver = false;
+    let platformGap = 80;     // Distanza verticale tra piattaforme
+    let platformWidth = 70;   // Larghezza piattaforme
+    let difficulty = 1;       // Fattore di difficoltà
+
+    // Personaggio
+    const player = {
+      x: width / 2 - 20,
+      y: height - 150,
+      width: 40,
+      height: 40,
+      velocityY: 0,
+      velocityX: 0,
+      jumpForce: -12,
+      gravity: 0.5,
+      speed: 5,
+      jumping: false,
+      color: '#32CD32'
+    };
+
+    // Array di piattaforme, bonus e ostacoli
+    let platforms = [];
+    let bonuses = [];
+    let obstacles = [];
+
+    // Sprites (immagini)
+    const sprites = {
+      player: new Image(),
+      platform: new Image(),
+      bonus: new Image(),
+      obstacle: new Image()
+    };
+
+    // Crea immagini circolari/rettangolari di base (usate come placeholder)
+    function createCircleImage(color, size) {
+      const tempCanvas = document.createElement('canvas');
+      tempCanvas.width = size;
+      tempCanvas.height = size;
+      const tempCtx = tempCanvas.getContext('2d');
+
+      tempCtx.fillStyle = color;
+      tempCtx.beginPath();
+      tempCtx.arc(size / 2, size / 2, size / 2, 0, Math.PI * 2);
+      tempCtx.fill();
+
+      const img = new Image();
+      img.src = tempCanvas.toDataURL();
+      return img;
+    }
+
+    function createRectImage(color, w, h) {
+      const tempCanvas = document.createElement('canvas');
+      tempCanvas.width = w;
+      tempCanvas.height = h;
+      const tempCtx = tempCanvas.getContext('2d');
+
+      tempCtx.fillStyle = color;
+      tempCtx.fillRect(0, 0, w, h);
+
+      const img = new Image();
+      img.src = tempCanvas.toDataURL();
+      return img;
+    }
+
+    // Funzione per caricare un'immagine esterna per il giocatore
+    function loadPlayerImage(imageUrl) {
+      const img = new Image();
+      img.src = imageUrl;
+      // Fallback: se non carica, crea un semplice cerchio verde
+      img.onerror = function() {
+        console.error("Errore nel caricamento dell'immagine del giocatore.");
+        sprites.player = createCircleImage('#32CD32', 40);
+      };
+      return img;
+    }
+
+    // Inizializza i placeholder per le immagini
+    // Per sostituirle con risorse personalizzate, modifica i parametri o gli URL.
+    sprites.player = loadPlayerImage('jump/io.png'); // Esempio: immagine personalizzata
+    // sprites.player = createCircleImage('#32CD32', 40); // Se vuoi forzare il cerchio
+    sprites.platform = createRectImage('#8B4513', platformWidth, 15);
+    sprites.bonus = createCircleImage('#FFD700', 20);
+    sprites.obstacle = createCircleImage('#FF0000', 15);
+
+    // Genera piattaforme iniziali
+    function generateInitialPlatforms() {
+      platforms = [];
+      let platformCount = Math.floor(height / platformGap);
+
+      // Prima piattaforma sotto il giocatore
+      platforms.push({
+        x: width / 2 - platformWidth / 2,
+        y: height - 100,
+        width: platformWidth,
+        height: 15
+      });
+
+      // Genera le altre piattaforme
+      for (let i = 0; i < platformCount; i++) {
+        platforms.push({
+          x: Math.random() * (width - platformWidth),
+          y: height - (i * platformGap) - 200,
+          width: platformWidth,
+          height: 15
         });
-        
-        window.addEventListener('keyup', function(e) {
-            if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') keys.left = false;
-            if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') keys.right = false;
+      }
+    }
+
+    // Funzione per creare una nuova piattaforma in cima
+    function generateNewPlatform() {
+      platforms.push({
+        x: Math.random() * (width - platformWidth),
+        y: platforms[platforms.length - 1].y - platformGap,
+        width: platformWidth,
+        height: 15
+      });
+    }
+
+    // Genera un nuovo bonus
+    function generateBonus() {
+      if (Math.random() < 0.1 * difficulty) {
+        const platform = platforms[Math.floor(Math.random() * platforms.length)];
+        bonuses.push({
+          x: platform.x + platform.width / 2 - 10,
+          y: platform.y - 25,
+          width: 20,
+          height: 20,
+          type: 'point'
         });
-        
-        // Supporto per i controlli mobile tramite l'accelerometro
-        window.addEventListener('deviceorientation', function(e) {
-            if (e.gamma !== null) {
-                const tilt = e.gamma; // Valore tra -90 e 90
-                
-                // Reimposta i valori
-                keys.left = false;
-                keys.right = false;
-                
-                // Imposta la direzione in base all'inclinazione
-                if (tilt < -5) keys.left = true;
-                if (tilt > 5) keys.right = true;
-            }
+      }
+    }
+
+    // Genera un nuovo ostacolo
+    function generateObstacle() {
+      if (Math.random() < 0.05 * difficulty && score > 1000) {
+        obstacles.push({
+          x: Math.random() * (width - 15),
+          y: -20,
+          width: 15,
+          height: 15,
+          speed: 2 + difficulty
         });
-        
-        // Controlla collisioni tra due oggetti
-        function checkCollision(obj1, obj2) {
-            return obj1.x < obj2.x + obj2.width &&
-                   obj1.x + obj1.width > obj2.x &&
-                   obj1.y < obj2.y + obj2.height &&
-                   obj1.y + obj1.height > obj2.y;
+      }
+    }
+
+    // Oggetto per gestire tasti premuti
+    let keys = {
+      left: false,
+      right: false
+    };
+
+    // Eventi per tastiera (desktop)
+    window.addEventListener('keydown', function(e) {
+      if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') keys.left = true;
+      if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') keys.right = true;
+    });
+
+    window.addEventListener('keyup', function(e) {
+      if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') keys.left = false;
+      if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') keys.right = false;
+    });
+
+    // Funzione che gestisce l'orientamento del dispositivo
+    function handleDeviceOrientation(e) {
+      if (e.gamma !== null) {
+        const tilt = e.gamma; // Valore tipico fra -90 e +90
+        keys.left = false;
+        keys.right = false;
+        if (tilt < -5) keys.left = true;
+        if (tilt > 5) keys.right = true;
+      }
+    }
+
+    // Richiede il permesso per l'uso dell'accelerometro (necessario su iOS 13+)
+    async function requestOrientationPermission() {
+      if (typeof DeviceOrientationEvent !== 'undefined'
+          && typeof DeviceOrientationEvent.requestPermission === 'function') {
+        try {
+          const permissionState = await DeviceOrientationEvent.requestPermission();
+          if (permissionState === 'granted') {
+            window.addEventListener('deviceorientation', handleDeviceOrientation);
+            console.log('Permesso concesso per i sensori di orientamento.');
+          } else {
+            console.log('Permesso negato per i sensori di orientamento.');
+          }
+        } catch (err) {
+          console.error('Errore nella richiesta di permesso:', err);
         }
-        
-        // Aggiorna il gioco
-        function update() {
-            if (gameOver) return;
-            
-            // Aggiorna posizione del giocatore
-            player.velocityY += player.gravity;
-            
-            // Movimento orizzontale
-            if (keys.left) {
-                player.velocityX = -player.speed;
-            } else if (keys.right) {
-                player.velocityX = player.speed;
-            } else {
-                player.velocityX = 0;
-            }
-            
-            player.x += player.velocityX;
-            player.y += player.velocityY;
-            
-            // Attraversa i bordi dello schermo (effetto pacman)
-            if (player.x > width) {
-                player.x = 0;
-            } else if (player.x < 0) {
-                player.x = width - player.width;
-            }
-            
-            // Controlla collisione con piattaforme
-            for (let i = 0; i < platforms.length; i++) {
-                const platform = platforms[i];
-                
-                // Se il giocatore sta cadendo e collide con una piattaforma
-                if (player.velocityY > 0 &&
-                    player.y + player.height > platform.y &&
-                    player.y + player.height < platform.y + platform.height &&
-                    player.x + player.width > platform.x &&
-                    player.x < platform.x + platform.width) {
-                    player.jumping = false;
-                    player.velocityY = player.jumpForce;
-                }
-            }
-            
-            // Controlla collisione con bonus
-            for (let i = 0; i < bonuses.length; i++) {
-                const bonus = bonuses[i];
-                if (checkCollision(player, bonus)) {
-                    score += 500;
-                    bonuses.splice(i, 1);
-                    i--;
-                }
-            }
-            
-            // Controlla collisione con ostacoli
-            for (let i = 0; i < obstacles.length; i++) {
-                const obstacle = obstacles[i];
-                if (checkCollision(player, obstacle)) {
-                    endGame();
-                    return;
-                }
-                obstacle.y += obstacle.speed;
-                
-                // Rimuovi ostacoli fuori schermo
-                if (obstacle.y > height) {
-                    obstacles.splice(i, 1);
-                    i--;
-                }
-            }
-            
-            // Se il giocatore sale abbastanza in alto, sposta la visuale
-            const maxHeight = height / 3;
-            if (player.y < maxHeight) {
-                const delta = maxHeight - player.y;
-                player.y = maxHeight;
-                
-                // Sposta tutte le piattaforme verso il basso
-                for (let i = 0; i < platforms.length; i++) {
-                    platforms[i].y += delta;
-                }
-                
-                // Sposta tutti i bonus verso il basso
-                for (let i = 0; i < bonuses.length; i++) {
-                    bonuses[i].y += delta;
-                }
-                
-                // Aumenta il punteggio in base all'altezza raggiunta
-                score += Math.floor(delta);
-            }
-            
-            // Rimuovi piattaforme uscite dallo schermo
-            for (let i = 0; i < platforms.length; i++) {
-                if (platforms[i].y > height) {
-                    platforms.splice(i, 1);
-                    i--;
-                    generateNewPlatform();
-                }
-            }
-            
-            // Rimuovi bonus usciti dallo schermo
-            for (let i = 0; i < bonuses.length; i++) {
-                if (bonuses[i].y > height) {
-                    bonuses.splice(i, 1);
-                    i--;
-                }
-            }
-            
-            // Game over se il giocatore cade
-            if (player.y > height) {
-                endGame();
-                return;
-            }
-            
-            // Aumenta la difficoltà con il punteggio
-            difficulty = 1 + (score / 10000);
-            
-            // Genera nuovi elementi di gioco
-            if (Math.random() < 0.02) generateBonus();
-            if (Math.random() < 0.01) generateObstacle();
-            
-            // Aggiorna il punteggio visualizzato
-            scoreElement.textContent = Math.floor(score);
+      } else {
+        // Alcuni browser Android non richiedono permesso esplicito
+        window.addEventListener('deviceorientation', handleDeviceOrientation);
+      }
+    }
+
+    // Pulsante per abilitare l’inclinazione su mobile
+    permissionBtn.addEventListener('click', requestOrientationPermission);
+
+    // Controllo collisione tra due rettangoli
+    function checkCollision(obj1, obj2) {
+      return (
+        obj1.x < obj2.x + obj2.width &&
+        obj1.x + obj1.width > obj2.x &&
+        obj1.y < obj2.y + obj2.height &&
+        obj1.y + obj1.height > obj2.y
+      );
+    }
+
+    // Aggiorna lo stato di gioco
+    function update() {
+      if (gameOver) return;
+
+      // Gravità e movimento verticale del giocatore
+      player.velocityY += player.gravity;
+
+      // Movimento orizzontale
+      if (keys.left) {
+        player.velocityX = -player.speed;
+      } else if (keys.right) {
+        player.velocityX = player.speed;
+      } else {
+        player.velocityX = 0;
+      }
+
+      // Aggiorna posizione
+      player.x += player.velocityX;
+      player.y += player.velocityY;
+
+      // Attraversa i bordi (effetto pacman orizzontale)
+      if (player.x > width) {
+        player.x = 0;
+      } else if (player.x + player.width < 0) {
+        player.x = width - player.width;
+      }
+
+      // Controlla collisione con piattaforme
+      for (let i = 0; i < platforms.length; i++) {
+        const platform = platforms[i];
+        // Se il giocatore sta cadendo e collide con una piattaforma
+        if (
+          player.velocityY > 0 &&
+          player.y + player.height > platform.y &&
+          player.y + player.height < platform.y + platform.height &&
+          player.x + player.width > platform.x &&
+          player.x < platform.x + platform.width
+        ) {
+          player.jumping = false;
+          player.velocityY = player.jumpForce; // Rimbalzo
         }
-        
-        // Disegna tutti gli elementi di gioco
-        function draw() {
-            // Pulisci il canvas
-            ctx.clearRect(0, 0, width, height);
-            
-            // Disegna piattaforme
-            platforms.forEach(platform => {
-                ctx.drawImage(sprites.platform, platform.x, platform.y, platform.width, platform.height);
-            });
-            
-            // Disegna bonus
-            bonuses.forEach(bonus => {
-                ctx.drawImage(sprites.bonus, bonus.x, bonus.y, bonus.width, bonus.height);
-            });
-            
-            // Disegna ostacoli
-            obstacles.forEach(obstacle => {
-                ctx.drawImage(sprites.obstacle, obstacle.x, obstacle.y, obstacle.width, obstacle.height);
-            });
-            
-            // Disegna giocatore
-            ctx.drawImage(sprites.player, player.x, player.y, player.width, player.height);
+      }
+
+      // Collisione con i bonus
+      for (let i = 0; i < bonuses.length; i++) {
+        const bonus = bonuses[i];
+        if (checkCollision(player, bonus)) {
+          score += 500;
+          bonuses.splice(i, 1);
+          i--;
         }
-        
-        // Game loop
-        function gameLoop() {
-            update();
-            draw();
-            
-            if (!gameOver) {
-                requestAnimationFrame(gameLoop);
-            }
+      }
+
+      // Collisione con ostacoli
+      for (let i = 0; i < obstacles.length; i++) {
+        const obstacle = obstacles[i];
+        if (checkCollision(player, obstacle)) {
+          endGame();
+          return;
         }
-        
-        // Fine del gioco
-        function endGame() {
-            gameOver = true;
-            finalScoreElement.textContent = Math.floor(score);
-            gameOverElement.style.display = 'block';
+        // Movimento dell'ostacolo
+        obstacle.y += obstacle.speed;
+        // Rimuovi se fuori schermo
+        if (obstacle.y > height) {
+          obstacles.splice(i, 1);
+          i--;
         }
-        
-        // Inizia un nuovo gioco
-        function startGame() {
-            // Reset delle variabili
-            score = 0;
-            gameOver = false;
-            difficulty = 1;
-            gameOverElement.style.display = 'none';
-            
-            // Reset del giocatore
-            player.x = width / 2 - 20;
-            player.y = height - 150;
-            player.velocityY = 0;
-            
-            // Svuota gli array
-            bonuses = [];
-            obstacles = [];
-            
-            // Genera le piattaforme iniziali
-            generateInitialPlatforms();
-            
-            // Avvia il game loop
-            gameLoop();
+      }
+
+      // Spostamento dello scenario se il giocatore sale sopra un certo punto
+      const maxHeight = height / 3;
+      if (player.y < maxHeight) {
+        const delta = maxHeight - player.y;
+        player.y = maxHeight;
+
+        // Sposta piattaforme e bonus verso il basso
+        platforms.forEach(p => p.y += delta);
+        bonuses.forEach(b => b.y += delta);
+
+        // Aumenta il punteggio in base all'altezza
+        score += Math.floor(delta);
+      }
+
+      // Rimuove piattaforme fuori schermo e ne crea di nuove
+      for (let i = 0; i < platforms.length; i++) {
+        if (platforms[i].y > height) {
+          platforms.splice(i, 1);
+          i--;
+          generateNewPlatform();
         }
-        
-        // Evento restart
-        restartBtn.addEventListener('click', startGame);
-        
-        // Avvia il gioco all'inizio
-        window.onload = function() {
-            startGame();
-        };
-    </script>
+      }
+
+      // Rimuove bonus fuori schermo
+      for (let i = 0; i < bonuses.length; i++) {
+        if (bonuses[i].y > height) {
+          bonuses.splice(i, 1);
+          i--;
+        }
+      }
+
+      // Se il giocatore cade fuori dalla scena
+      if (player.y > height) {
+        endGame();
+        return;
+      }
+
+      // Aumenta la difficoltà con il punteggio
+      difficulty = 1 + (score / 10000);
+
+      // Genera occasionalmente bonus e ostacoli
+      if (Math.random() < 0.02) generateBonus();
+      if (Math.random() < 0.01) generateObstacle();
+
+      // Aggiorna punteggio visualizzato
+      scoreElement.textContent = Math.floor(score);
+    }
+
+    // Disegna tutti gli elementi
+    function draw() {
+      // Pulisci
+      ctx.clearRect(0, 0, width, height);
+
+      // Piattaforme
+      platforms.forEach(platform => {
+        ctx.drawImage(sprites.platform, platform.x, platform.y, platform.width, platform.height);
+      });
+
+      // Bonus
+      bonuses.forEach(bonus => {
+        ctx.drawImage(sprites.bonus, bonus.x, bonus.y, bonus.width, bonus.height);
+      });
+
+      // Ostacoli
+      obstacles.forEach(obstacle => {
+        ctx.drawImage(sprites.obstacle, obstacle.x, obstacle.y, obstacle.width, obstacle.height);
+      });
+
+      // Giocatore
+      ctx.drawImage(sprites.player, player.x, player.y, player.width, player.height);
+    }
+
+    // Game loop
+    function gameLoop() {
+      update();
+      draw();
+      if (!gameOver) requestAnimationFrame(gameLoop);
+    }
+
+    // Fine del gioco
+    function endGame() {
+      gameOver = true;
+      finalScoreElement.textContent = Math.floor(score);
+      gameOverElement.style.display = 'block';
+    }
+
+    // Avvia un nuovo gioco
+    function startGame() {
+      score = 0;
+      gameOver = false;
+      difficulty = 1;
+      gameOverElement.style.display = 'none';
+
+      // Reset del giocatore
+      player.x = width / 2 - 20;
+      player.y = height - 150;
+      player.velocityY = 0;
+      player.velocityX = 0;
+
+      // Svuota bonus e ostacoli
+      bonuses = [];
+      obstacles = [];
+
+      // Genera piattaforme
+      generateInitialPlatforms();
+
+      // Avvia loop
+      gameLoop();
+    }
+
+    // Pulsante di riavvio
+    restartBtn.addEventListener('click', startGame);
+
+    // Avvio automatico alla fine del caricamento
+    window.onload = function() {
+      startGame();
+    };
+  </script>
 </body>
 </html>
