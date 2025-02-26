@@ -130,10 +130,10 @@
 
     // Personaggio
     const player = {
-      x: width / 2 - 20,
-      y: height - 150,
-      width: 40,
-      height: 40,
+      x: width / 2 - 100, // aggiornato per centrare il player (200px / 2 = 100)
+      y: height - 250,    // regolato per posizionarlo correttamente
+      width: 200,         // dimensione aumentata
+      height: 200,        // dimensione aumentata
       velocityY: 0,
       velocityX: 0,
       jumpForce: -12,
@@ -201,7 +201,7 @@
 
     // Inizializza i placeholder per le immagini
     // Per sostituirle con risorse personalizzate, modifica i parametri o gli URL.
-    sprites.player = loadPlayerImage('jump/io.png'); // Esempio: immagine personalizzata
+    sprites.player = loadPlayerImage('io.png'); // Esempio: immagine personalizzata
     // sprites.player = createCircleImage('#32CD32', 40); // Se vuoi forzare il cerchio
     sprites.platform = createRectImage('#8B4513', platformWidth, 15);
     sprites.bonus = createCircleImage('#FFD700', 20);
