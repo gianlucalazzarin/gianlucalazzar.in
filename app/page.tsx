@@ -27,7 +27,7 @@ export default function Home() {
       <main className="relative z-10 min-h-screen flex items-center justify-center px-6 py-10">
         <section
           aria-label="Gianluca Lazzarin"
-          className="w-full max-w-3xl rounded-3xl bg-white/10 backdrop-blur-xl ring-1 ring-white/20 shadow-[0_10px_60px_rgba(0,0,0,0.35)] animate__animated animate__fadeInUp animate__slower"
+          className="w-full max-w-3xl rounded-3xl bg-white/10 backdrop-blur-xl ring-1 ring-white/20 shadow-[0_10px_60px_rgba(0,0,0,0.35)] animate__animated animate__fadeInUp"
         >
           {/* Layout foto + testo */}
           <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 sm:gap-8 p-8 sm:p-10">
