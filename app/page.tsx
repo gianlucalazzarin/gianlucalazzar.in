@@ -7,31 +7,26 @@ export default function Home() {
   return (
     <div className="relative h-screen">
       <Image
-      src={bgImage}
-      alt="background"
-      fill
-      priority
-      style={{ objectFit: 'cover' }}
-      unoptimized
+        src={bgImage}
+        alt="background"
+        fill
+        priority
+        style={{ objectFit: 'cover' }}
+        unoptimized
       />
 
       <div className="relative z-10 flex flex-col justify-center h-full">
         <div className="text-center">
           <div className="flex justify-center space-x-4 animate__animated animate__fadeInUp animate__delay-2s">
-            <a href="https://x.com/glzzn">
-              <div className="bg-black w-10 h-10 flex items-center justify-center rounded focus:outline-none">
-                <i className="fab fa-x-twitter text-white text-2xl"></i>
-              </div>
-            </a>
-            <a href="https://instagram.com/gianlucalazzarin">
-              <div className="bg-black w-10 h-10 flex items-center justify-center rounded focus:outline-none">
-                <i className="fab fa-instagram text-white text-2xl"></i>
-              </div>
-            </a>
-            <a href="https://www.linkedin.com/in/lazzaringianluca/">
+            <a href="https://github.com/gianlucalazzarin">
               <div className="bg-black w-10 h-10 flex items-center justify-center rounded focus:outline-none">
                 <i className="fab fa-linkedin-in text-white text-2xl"></i>
               </div>
+              <a href="https://instagram.com/gianlucalazzarin">
+                <div className="bg-black w-10 h-10 flex items-center justify-center rounded focus:outline-none">
+                  <i className="fab fa-github text-white text-2xl"></i>
+                </div>
+              </a>
             </a>
             <a href="mailto:info@gianlucalazzarin.com">
               <div className="bg-black w-10 h-10 flex items-center justify-center rounded focus:outline-none">
