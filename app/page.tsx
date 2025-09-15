@@ -1,22 +1,22 @@
-// app/page.js (o pages/index.js se usi pages/)
-
+import Image from 'next/image';
 import bgImage from '../public/background.jpg';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'animate.css';
 
 export default function Home() {
   return (
-    <div
-      className="h-screen bg-cover bg-center bg-no-repeat animate__animated animate__fadeIn"
-      style={{
-        backgroundImage: `url(${bgImage.src})`,
-        imageRendering: 'auto',
-        backfaceVisibility: 'hidden',
-        transform: 'translateZ(0)',
-        willChange: 'transform',
-      }}
-    >
-      <div className="flex flex-col justify-center h-full">
+    <div className="relative h-screen">
+      <Image
+        src={bgImage}
+        alt="background"
+        fill
+        priority
+        style={{ objectFit: 'cover' }}
+        // se noti problemi di qualità, prova ad attivare:
+        // unoptimized
+      />
+
+      <div className="relative z-10 flex flex-col justify-center h-full">
         <div className="text-center">
           <div className="flex justify-center space-x-4 animate__animated animate__fadeInUp animate__delay-2s">
             <a href="https://x.com/glzzn">
