@@ -21,7 +21,7 @@ export default function Home() {
       {/* Overlay: gradiente uniforme scuro su tutto lo sfondo */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-black/70"
+        className="pointer-events-none absolute inset-0 bg-black/40"
       />
       {/* Contenuto */}
       <main className="relative z-10 min-h-screen flex items-center justify-center px-6 py-10">
