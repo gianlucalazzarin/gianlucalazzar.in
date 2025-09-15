@@ -21,17 +21,6 @@ export default function Home() {
       <div className="relative z-10 flex justify-center items-center h-full">
         <div className="bg-white/90 backdrop-blur-md shadow-2xl rounded-2xl p-8 flex flex-col sm:flex-row items-center max-w-2xl animate__animated animate__fadeInUp gap-6">
           
-          {/* Foto profilo */}
-          <div className="flex-shrink-0">
-            <Image
-              src={profilePic}
-              alt="Gianluca Lazzarin"
-              width={120}
-              height={120}
-              className="rounded-full border-4 border-white shadow-lg"
-              priority
-            />
-          </div>
 
           {/* Testo */}
           <div className="text-center sm:text-left">
