@@ -35,7 +35,7 @@ export default function Home() {
           {/* Testo */}
           <div className="sm:ml-6 mt-4 sm:mt-0 text-center sm:text-left">
             <h1 className="text-3xl font-bold text-gray-900">Gianluca Lazzarin</h1>
-            <h2 className="text-xl text-gray-700 mt-1">Full Stack Developer</h2>
+            <h2 className="text-xl text-gray-700 mt-1">Full Stack Developer   </h2>
             <p className="text-gray-700 mt-2">
               Sono Gianluca Lazzarin, informatico, sviluppatore full stack, grande appassionato e studioso di tecnologia.
             </p>
