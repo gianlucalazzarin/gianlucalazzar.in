@@ -21,7 +21,19 @@ export default function Home() {
       <div className="relative z-10 flex justify-center items-center h-full">
         <div className="bg-white/90 backdrop-blur-md shadow-2xl rounded-2xl p-8 flex flex-col sm:flex-row items-center max-w-2xl animate__animated animate__fadeInUp">
           
-          {/* Foto profilo */}
+
+          {/* Testo */}
+          <div className="sm:ml-6 mt-4 sm:mt-0 text-center sm:text-left">
+            <h1 className="text-3xl font-bold text-gray-900">Gianluca Lazzarin</h1>
+            <h2 className="text-xl text-gray-700 mt-1">Full Stack Developer</h2>
+            <p className="text-gray-700 mt-2">
+              Sono Gianluca Lazzarin, informatico, sviluppatore full stack, grande appassionato e studioso di tecnologia.
+Credo nell’apprendimento continuo e nell’aggiornamento delle competenze per restare al passo con le più recenti innovazioni.
+In parallelo al lavoro, studio Filosofia ed Etica dell'Intelligenza Artificiale per comprendere al meglio l'impatto dell'IA sulla mia attività professionale, preparandomi così alle sfide del futuro.
+Il mio obiettivo è crescere ulteriormente nello sviluppo di soluzioni SaaS, creando prodotti sempre più innovativi.
+            </p>
+
+         {/* Foto profilo */}
           <div className="flex-shrink-0">
             <Image
               src={profilePic}
@@ -31,15 +43,6 @@ export default function Home() {
               className="rounded-full border-4 border-white shadow-lg"
             />
           </div>
-
-          {/* Testo */}
-          <div className="sm:ml-6 mt-4 sm:mt-0 text-center sm:text-left">
-            <h1 className="text-3xl font-bold text-gray-900">Gianluca Lazzarin</h1>
-            <h2 className="text-xl text-gray-700 mt-1">Full Stack Developer</h2>
-            <p className="text-gray-700 mt-2">
-              Sono Gianluca Lazzarin, informatico, sviluppatore full stack, grande appassionato e studioso di tecnologia.
-            </p>
-
             {/* Icone social */}
             <div className="flex justify-center sm:justify-start space-x-4 mt-4">
               <a href="https://www.linkedin.com/in/lazzaringianluca/">
