@@ -27,17 +27,6 @@ export default function Home() {
           {/* Layout foto + testo */}
           <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 sm:gap-8">
             
-            {/* Foto profilo a sinistra */}
-            <div className="relative group shrink-0">
-              <Image
-                src={profilePic}
-                alt="Gianluca Lazzarin"
-                width={140}
-                height={140}
-                className="rounded-full border-4 border-white/70 shadow-xl transition-transform duration-500 group-hover:scale-105"
-              />
-              <div className="pointer-events-none absolute inset-0 rounded-full bg-gradient-to-tr from-white/20 to-transparent blur-2xl opacity-0 group-hover:opacity-100 transition duration-700" />
-            </div>
 
             {/* Testo a destra */}
             <div className="text-center sm:text-left">
@@ -74,6 +63,18 @@ export default function Home() {
                   <i className="fas fa-envelope text-white text-2xl" />
                 </a>
               </div>
+            </div>
+
+                        {/* Foto profilo a sinistra */}
+            <div className="relative group shrink-0">
+              <Image
+                src={profilePic}
+                alt="Gianluca Lazzarin"
+                width={140}
+                height={140}
+                className="rounded-full border-4 border-white/70 shadow-xl transition-transform duration-500 group-hover:scale-105"
+              />
+              <div className="pointer-events-none absolute inset-0 rounded-full bg-gradient-to-tr from-white/20 to-transparent blur-2xl opacity-0 group-hover:opacity-100 transition duration-700" />
             </div>
           </div>
         </div>
