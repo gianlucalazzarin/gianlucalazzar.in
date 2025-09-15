@@ -56,9 +56,9 @@ export default function Home() {
 
               <p className="text-gray-100/90 mt-3 max-w-md">
 Sono Gianluca Lazzarin, informatico, sviluppatore full stack, grande appassionato e studioso di tecnologia.
-Credo nell'apprendimento continuo e nell'aggiornamento delle competenze per restare al passo con le più recenti innovazioni.
-In parallelo al lavoro, studio Filosofia ed Etica dell'Intelligenza Artificiale per comprendere al meglio l'impatto dell'IA sulla mia attività professionale, preparandomi così alle sfide del futuro.
-Il mio obiettivo è crescere ulteriormente nello sviluppo di soluzioni SaaS, creando prodotti sempre più innovativi.              </p>
+              Credo nell’apprendimento continuo e nell’aggiornamento delle competenze per restare al passo con le più recenti innovazioni.
+              In parallelo al lavoro, studio Filosofia ed Etica dell’Intelligenza Artificiale per comprendere al meglio l’impatto dell’IA sulla mia attività professionale, preparandomi così alle sfide del futuro.
+              Il mio obiettivo è crescere ulteriormente nello sviluppo di soluzioni SaaS, creando prodotti sempre più innovativi.              </p>
 
               {/* Icone social accessibili */}
               <nav aria-label="Link ai profili social" className="mt-5">
