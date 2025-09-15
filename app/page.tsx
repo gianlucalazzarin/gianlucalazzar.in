@@ -18,11 +18,17 @@ export default function Home() {
         className="object-cover object-[35%_50%]"
       />
 
+      {/* Overlay: gradiente che schiarisce il lato sinistro e sfuma verso destra */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-black/0"
+      />
+
       {/* Contenuto */}
       <main className="relative z-10 min-h-screen flex items-center justify-center px-6 py-10">
         <section
-          aria-label="Profilo di Gianluca Lazzarin"
-          className="w-full max-w-3xl rounded-3xl bg-white/10 backdrop-blur-xl ring-1 ring-white/20 shadow-[0_10px_60px_rgba(0,0,0,0.35)] animate__animated animate__fadeInUp"
+          aria-label="Gianluca Lazzarin"
+          className="w-full max-w-3xl rounded-3xl bg-white/10 backdrop-blur-xl ring-1 ring-white/20 shadow-[0_10px_60px_rgba(0,0,0,0.35)] animate__animated animate__fadeInUp [animation-duration:4s]"
         >
           {/* Layout foto + testo */}
           <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 sm:gap-8 p-8 sm:p-10">
@@ -50,7 +56,7 @@ export default function Home() {
               </h2>
 
               <p className="text-gray-100/90 mt-3 max-w-md">
-                Informatico e sviluppatore full stack, appassionato di tecnologie e di come usarle per creare prodotti SaaS eleganti e utili.
+                Sono Gianluca Lazzarin, informatico e sviluppatore full stack, appassionato di tecnologie e di come usarle per creare prodotti SaaS eleganti e utili.
               </p>
 
               {/* Icone social accessibili */}
