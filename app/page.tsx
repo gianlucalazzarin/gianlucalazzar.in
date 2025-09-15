@@ -56,7 +56,7 @@ export default function Home() {
 
               <p className="text-gray-100/90 mt-3 max-w-md">
 Informatico, sviluppatore full stack, grande appassionato e studioso di tecnologia.
-              </p>
+</p>
 
               {/* Icone social accessibili */}
               <nav aria-label="Link ai profili social" className="mt-5">
