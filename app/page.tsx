@@ -37,7 +37,6 @@ export default function Home() {
             <h1 className="text-3xl font-bold text-gray-900">Gianluca Lazzarin</h1>
             <h2 className="text-xl text-gray-700 mt-1">Full Stack Developer</h2>
             <p className="text-gray-700 mt-2">
-              <br />
               Sono Gianluca Lazzarin, informatico, sviluppatore full stack, grande appassionato e studioso di tecnologia.
 Credo nell'apprendimento continuo e nell'aggiornamento delle competenze per restare al passo con le più recenti innovazioni.
 In parallelo al lavoro, studio Filosofia ed Etica dell'Intelligenza Artificiale per comprendere al meglio l'impatto dell'IA sulla mia attività professionale, preparandomi così alle sfide del futuro.
