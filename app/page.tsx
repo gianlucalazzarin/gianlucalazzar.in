@@ -23,7 +23,7 @@ export default function Home() {
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 bg-black/70"
       />
-      {/* Contenuto */}}
+      {/* Contenuto */}
       <main className="relative z-10 min-h-screen flex items-center justify-center px-6 py-10">
         <section
           aria-label="Gianluca Lazzarin"
