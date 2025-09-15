@@ -7,13 +7,12 @@ export default function Home() {
   return (
     <div className="relative h-screen">
       <Image
-        src={bgImage}
-        alt="background"
-        fill
-        priority
-        style={{ objectFit: 'cover' }}
-        // se noti problemi di qualità, prova ad attivare:
-        // unoptimized
+      src={bgImage}
+      alt="background"
+      fill
+      priority
+      style={{ objectFit: 'cover' }}
+      unoptimized
       />
 
       <div className="relative z-10 flex flex-col justify-center h-full">
@@ -34,7 +33,7 @@ export default function Home() {
                 <i className="fab fa-linkedin-in text-white text-2xl"></i>
               </div>
             </a>
-            <a href="mailto:io@gianlucalazzar.in">
+            <a href="mailto:info@gianlucalazzarin.com">
               <div className="bg-black w-10 h-10 flex items-center justify-center rounded focus:outline-none">
                 <i className="fas fa-envelope text-yellow-400 text-2xl"></i>
               </div>
