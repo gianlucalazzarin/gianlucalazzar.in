@@ -7,17 +7,17 @@ import 'animate.css';
 export default function Home() {
   return (
     <div className="relative h-screen overflow-hidden">
-      {/* Background */}
+      {/* Background con focus a sinistra */}
       <Image
         src={bgImage}
         alt="background"
         fill
         priority
-        className="object-cover object-center"
+        className="object-cover object-left" // 👈 focal point sul lato sinistro
         unoptimized
       />
 
-      {/* Vignette per contrasto */}
+      {/* Overlay per contrasto */}
       <div className="absolute inset-0 bg-black/40" />
 
       {/* Card centrale */}
@@ -36,7 +36,6 @@ export default function Home() {
                 height={140}
                 className="rounded-full border-4 border-white/70 shadow-xl transition-transform duration-500 group-hover:scale-105"
               />
-              {/* Glow effetto hover */}
               <div className="pointer-events-none absolute inset-0 rounded-full bg-gradient-to-tr from-white/20 to-transparent blur-2xl opacity-0 group-hover:opacity-100 transition duration-700" />
             </div>
 
