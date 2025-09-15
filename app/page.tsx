@@ -13,7 +13,7 @@ export default function Home() {
         alt="background"
         fill
         priority
-        className="object-cover object-left" // 👈 focal point sul lato sinistro
+        className="object-cover object-left object-[20%_50%]" // 👈 focal point sul lato sinistro
         unoptimized
       />
 
