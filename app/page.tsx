@@ -18,15 +18,15 @@ export default function Home() {
       <div className="relative z-10 flex flex-col justify-center h-full">
         <div className="text-center">
           <div className="flex justify-center space-x-4 animate__animated animate__fadeInUp animate__delay-2s">
-            <a href="https://github.com/gianlucalazzarin">
+            <a href="https://www.linkedin.com/in/lazzaringianluca/">
               <div className="bg-black w-10 h-10 flex items-center justify-center rounded focus:outline-none">
                 <i className="fab fa-linkedin-in text-white text-2xl"></i>
               </div>
-              <a href="https://instagram.com/gianlucalazzarin">
-                <div className="bg-black w-10 h-10 flex items-center justify-center rounded focus:outline-none">
-                  <i className="fab fa-github text-white text-2xl"></i>
-                </div>
-              </a>
+            </a>
+            <a href="https://github.com/gianlucalazzarin">
+              <div className="bg-black w-10 h-10 flex items-center justify-center rounded focus:outline-none">
+                <i className="fab fa-github text-white text-2xl"></i>
+              </div>
             </a>
             <a href="mailto:info@gianlucalazzarin.com">
               <div className="bg-black w-10 h-10 flex items-center justify-center rounded focus:outline-none">
